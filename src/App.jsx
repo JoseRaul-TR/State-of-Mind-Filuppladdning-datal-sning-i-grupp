@@ -8,8 +8,6 @@ function App() {
       <h1 className="bg-red-600">GRUPPARBETE TJOHO</h1>
 
       <UploadFile />
-      <EditableTable />
-      <ExportButton />
     </>
   );
 }
