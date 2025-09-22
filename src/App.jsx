@@ -1,6 +1,6 @@
 import EditableTable from "./components/EditableTable";
 import UploadFile from "./components/UploadFile";
-import ExportButton from "./components/ExportButton";
+import ExportButton from "./components/Button";
 
 function App() {
   return (
