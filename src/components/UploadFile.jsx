@@ -16,7 +16,7 @@ export default function UploadFile({ onSubmit }) {
     if (file) {
       onSubmit({ file });
     } else {
-      alert("Vänligen välj en Excel-fil");
+      alert("Please select an Excel file");
     }
   };
 
@@ -27,23 +27,12 @@ export default function UploadFile({ onSubmit }) {
   };
 
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "20px",
-      }}
-    >
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6">
       {/* Startknapp */}
       {!showForm && (
         <button
           onClick={() => setShowForm(true)}
-          style={{
-            padding: "10px 20px",
-            marginBottom: "20px",
-            cursor: "pointer",
-          }}
+          className="rounded-lg bg-indigo-600 px-6 py-3 text-white shadow transition hover:bg-indigo-700"
         >
           UPLOAD FILE
         </button>
@@ -51,34 +40,38 @@ export default function UploadFile({ onSubmit }) {
 
       {/* Formulär */}
       {showForm && (
-        <div
-          style={{
-            border: "1px solid #ccc",
-            padding: "20px",
-            borderRadius: "8px",
-            width: "300px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "15px",
-          }}
-        >
-          <h2 style={{ textAlign: "center" }}>Upload your Excel file</h2>
+        <div className="mt-4 flex w-full max-w-md flex-col gap-6 rounded-xl bg-white p-6 shadow-lg">
+          <h2 className="text-center text-2xl font-semibold">
+            Upload your Excel file
+          </h2>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            <label>Upload Excel (.xlsx)</label>
-            <input type="file" accept=".xlsx" onChange={handleFileChange} />
+          {/* Inputfält för Excel-fil – tydligare styling */}
+          <div className="flex flex-col gap-2">
+            <label className="font-medium">Select Excel (.xlsx)</label>
+            <input
+              type="file"
+              accept=".xlsx"
+              onChange={handleFileChange}
+              className="w-full cursor-pointer rounded-lg border-2 border-indigo-400 bg-indigo-50 p-3 text-indigo-700 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-600 file:px-4 file:py-2 file:text-white file:transition hover:border-indigo-500 hover:bg-indigo-100 hover:file:bg-indigo-700"
+            />
+            {file && (
+              <p className="mt-1 text-gray-600">
+                Selected file: <span className="font-medium">{file.name}</span>
+              </p>
+            )}
           </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          {/* Knappar */}
+          <div className="mt-4 flex justify-between">
             <button
               onClick={handleCancel}
-              style={{ padding: "5px 10px", cursor: "pointer" }}
+              className="rounded bg-indigo-500 px-4 py-2 text-white transition hover:bg-indigo-600"
             >
               Cancel
             </button>
             <button
               onClick={handleSubmit}
-              style={{ padding: "5px 10px", cursor: "pointer" }}
+              className="rounded bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-700"
             >
               Submit
             </button>
