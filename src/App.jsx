@@ -5,12 +5,11 @@ import TempParseComponent from "./utils/SheetParse";
 
 function App() {
   return (
-    <>
-      <h1 className="bg-red-600">GRUPPARBETE TJOHO</h1>
-
+    <main className="m-7 p-7 text-center">
       <UploadFile />
+
       <TempParseComponent />
-    </>
+    </main>
   );
 }
 
