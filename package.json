@@ -12,12 +12,14 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/react-table": "^8.21.3",
+    "ag-grid-community": "^34.2.0",
+    "ag-grid-react": "^34.2.0",
+    "exceljs": "^4.4.0",
     "jspdf": "^3.0.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0",
-    "tailwindcss": "^4.1.13",
-    "xlsx": "^0.18.5"
+    "tailwindcss": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
