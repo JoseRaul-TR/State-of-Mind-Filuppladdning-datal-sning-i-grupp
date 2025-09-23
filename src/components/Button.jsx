@@ -1,3 +1,3 @@
-export default function ExportButton() {
+export default function Button() {
   return <button>KNAPP</button>;
 }
