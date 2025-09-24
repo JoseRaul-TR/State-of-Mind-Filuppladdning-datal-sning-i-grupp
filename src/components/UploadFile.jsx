@@ -2,22 +2,16 @@ import ExcelJS from "exceljs";
 import { useState, useEffect } from "react";
 
 // UploadFile tar emot prop "onSubmit"
-export default function UploadFile({ onSubmit }) {
+export default function UploadFile({ file, setFile, setWorkbook }) {
   // State för att visa formuläret eller startknappen
   const [showForm, setShowForm] = useState(false);
-
-  // State för att spara den fil användaren väljer
-  const [file, setFile] = useState(null);
 
   // När användaren väljer en fil i inputfältet
   const handleFileChange = (e) => setFile(e.target.files[0]);
 
-  const [workbook, setWorkbook] = useState(null);
-
   // När användaren klickar på Submit
   const handleSubmit = () => {
     if (file) {
-      onSubmit({ file });
     } else {
       alert("Please select an Excel file");
     }
@@ -37,7 +31,7 @@ export default function UploadFile({ onSubmit }) {
       //   type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
       // });
       const buffer = await file.arrayBuffer();
-      const wb = await new ExcelJS.Workbook();
+      const wb = new ExcelJS.Workbook();
       await wb.xlsx.load(buffer);
 
       console.log("log", wb);
@@ -48,17 +42,10 @@ export default function UploadFile({ onSubmit }) {
     if (file) {
       fetchExcel();
     }
-  }, [file]);
+  }, [file, setWorkbook]);
 
   return (
     <>
-      <h2 className="mt-7 mb-7">
-        {" "}
-        {workbook
-          ? `Excelfilen har laddats in. Den skapades ${workbook.created.toDateString()}, enligt data som hämtats från den parse'ade filen 🤓`
-          : "Det laddades aldrig upp någon fil... 😫"}
-      </h2>
-
       <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6">
         {/* Startknapp */}
         {!showForm && (
@@ -106,7 +93,7 @@ export default function UploadFile({ onSubmit }) {
                 onClick={handleSubmit}
                 className="rounded bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-700"
               >
-                Submit
+                Edit
               </button>
             </div>
           </div>
