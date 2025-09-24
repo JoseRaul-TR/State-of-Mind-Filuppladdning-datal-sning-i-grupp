@@ -1,6 +1,4 @@
-// Import the necessary jsPDF libraries
-import { jsPDF } from "jspdf";
-import autoTable from"jspdf-autotable";
+
 
 import { useState } from "react";
 
