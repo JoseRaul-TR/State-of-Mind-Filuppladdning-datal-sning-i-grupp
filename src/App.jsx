@@ -1,9 +1,16 @@
-import EditableTable from "./components/EditableTable";
-import UploadFile from "./components/UploadFile";
-import ExportButton from "./components/Button"; //krav från uppgiften enligt Anas
+// Import the necessary jsPDF libraries
+import { jsPDF } from "jspdf";
+import autoTable from"jspdf-autotable";
+
 import { useState } from "react";
 
+import ExportDialogue from "./components/ExportDialogue";
+import UploadFile from "./components/UploadFile";
+
+
+
 function App() {
+
   // State för att spara den fil användaren väljer
   const [file, setFile] = useState(null); //Användarens uppladdade fil
   const [workbook, setWorkbook] = useState(null); //Parsed excel till JS, med ExcelJS
@@ -26,6 +33,7 @@ function App() {
 
       {progress === "export" && <ExportDialogue />}
     </>
+
   );
 }
 
