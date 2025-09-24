@@ -80,7 +80,7 @@ export default function EditableTable({ data = [], onDataChange }) {
     return (
       <div className="border-2 border-dashed border-blue-300 p-6 text-center">
         <h2 className="mb-2 text-xl font-bold text-blue-600">
-          Redigerbar tabell ✏️
+          Redigerbar tabell
         </h2>
         <p className="text-gray-500">Ingen data att visa ännu</p>
       </div>
@@ -88,9 +88,7 @@ export default function EditableTable({ data = [], onDataChange }) {
 
   return (
     <div className="p-4">
-      <h2 className="mb-2 text-xl font-bold text-green-700">
-        Redigerbar tabell ✏️
-      </h2>
+      <h2 className="mb-2 text-xl font-bold text-green-700">Tabell</h2>
       <p className="mb-4 text-sm text-gray-600">
         Rader: {rowsData.length} | Kolumner: {columns.length}
       </p>
