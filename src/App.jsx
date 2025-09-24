@@ -1,14 +1,10 @@
-
-
 import { useState } from "react";
 
 import ExportDialogue from "./components/ExportDialogue";
 import UploadFile from "./components/UploadFile";
-
-
+import EditableTable from "./components/EditableTable";
 
 function App() {
-
   // State för att spara den fil användaren väljer
   const [file, setFile] = useState(null); //Användarens uppladdade fil
   const [workbook, setWorkbook] = useState(null); //Parsed excel till JS, med ExcelJS
@@ -31,7 +27,6 @@ function App() {
 
       {progress === "export" && <ExportDialogue />}
     </>
-
   );
 }
 
