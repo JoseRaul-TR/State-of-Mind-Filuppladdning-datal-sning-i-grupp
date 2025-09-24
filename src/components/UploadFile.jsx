@@ -1,12 +1,16 @@
-import { useState } from "react";
+import ExcelJS from "exceljs";
+import { useState, useEffect } from "react";
+import Button from "./Button";
 
 // UploadFile tar emot prop "onSubmit"
-export default function UploadFile({ onSubmit }) {
+export default function UploadFile({
+  file,
+  setFile,
+  setWorkbook,
+  setProgress,
+}) {
   // State för att visa formuläret eller startknappen
   const [showForm, setShowForm] = useState(false);
-
-  // State för att spara den fil användaren väljer
-  const [file, setFile] = useState(null);
 
   // När användaren väljer en fil i inputfältet
   const handleFileChange = (e) => setFile(e.target.files[0]);
@@ -14,7 +18,7 @@ export default function UploadFile({ onSubmit }) {
   // När användaren klickar på Submit
   const handleSubmit = () => {
     if (file) {
-      onSubmit({ file });
+      setProgress("editTable");
     } else {
       alert("Please select an Excel file");
     }
@@ -26,16 +30,31 @@ export default function UploadFile({ onSubmit }) {
     setFile(null); // Rensa filen
   };
 
+  useEffect(() => {
+    async function fetchExcel() {
+      const buffer = await file.arrayBuffer();
+      const wb = new ExcelJS.Workbook();
+      await wb.xlsx.load(buffer);
+      setWorkbook(wb);
+    }
+
+    if (file) {
+      fetchExcel();
+    }
+  }, [file, setWorkbook]);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6">
       {/* Startknapp */}
       {!showForm && (
-        <button
-          onClick={() => setShowForm(true)}
-          className="rounded-lg bg-indigo-600 px-6 py-3 text-white shadow transition hover:bg-indigo-700"
-        >
-          UPLOAD FILE
-        </button>
+        <>
+          <button
+            onClick={() => setShowForm(true)}
+            className="rounded-lg bg-indigo-600 px-6 py-3 text-white shadow transition hover:bg-indigo-700"
+          >
+            UPLOAD FILE
+          </button>
+        </>
       )}
 
       {/* Formulär */}
@@ -63,18 +82,8 @@ export default function UploadFile({ onSubmit }) {
 
           {/* Knappar */}
           <div className="mt-4 flex justify-between">
-            <button
-              onClick={handleCancel}
-              className="rounded bg-indigo-500 px-4 py-2 text-white transition hover:bg-indigo-600"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleSubmit}
-              className="rounded bg-indigo-600 px-4 py-2 text-white transition hover:bg-indigo-700"
-            >
-              Submit
-            </button>
+            <Button clickHandler={handleCancel} buttonText={"Cancel"} />
+            <Button clickHandler={handleSubmit} buttonText={"Edit"} />
           </div>
         </div>
       )}
