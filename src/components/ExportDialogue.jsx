@@ -19,7 +19,7 @@ export default function ExportDialogue({ exportStatus, onTryAgain, onCancel }) {
         {/* Button close modal */}
         <button
           onClick={onCancel}
-          className="absolute top-4 right-4 cursor-pointer text-gray-400 transition-colors hover:text-gray-600"
+          className="absolute top-4 right-4 cursor-pointer text-gray-400 transition-all hover:text-gray-600 hover:scale-105"
         >
           <AiOutlineClose size={24} />
         </button>
@@ -34,7 +34,7 @@ export default function ExportDialogue({ exportStatus, onTryAgain, onCancel }) {
               <a
                 href=""
                 target="_blank"
-                className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+                className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all cursor-pointer hover:bg-blue-700 hover:scale-105"
               >
                 <AiOutlineFilePdf className="mr-2" />
                 Öppna PDF-filen
@@ -42,7 +42,7 @@ export default function ExportDialogue({ exportStatus, onTryAgain, onCancel }) {
               <a
                 href=""
                 download
-                className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                className="flex items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all cursor-pointer hover:bg-gray-50 hover:scale-105"
               >
                 <AiOutlineDownload className="mr-2" />
                 Ladda ner PDF-filen
@@ -60,7 +60,7 @@ export default function ExportDialogue({ exportStatus, onTryAgain, onCancel }) {
             <div className="flex flex-row space-y-3">
               <button
                 onClick={onTryAgain}
-                className="flex items-center justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700"
+                className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all cursor-pointer hover:bg-blue-700 hover:scale-105"
               >
                 <AiOutlineReload className="mr-2" /> Försok igen
               </button>
