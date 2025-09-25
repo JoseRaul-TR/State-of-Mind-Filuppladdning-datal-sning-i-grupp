@@ -28,7 +28,11 @@ function TableInputCell({ value, onChange }) {
   );
 }
 
-export default function EditableTable({ data = [], onDataChange }) {
+export default function EditableTable({
+  data = [],
+  onDataChange,
+  setProgress,
+}) {
   // Lokal state för tabellrader
   const [rowsData, setRowsData] = useState([]);
 
@@ -88,7 +92,15 @@ export default function EditableTable({ data = [], onDataChange }) {
 
   return (
     <div className="p-4">
-      <h2 className="mb-2 text-xl font-bold text-green-700">Tabell</h2>
+      <h2 className="mb-2 text-xl font-bold text-green-700">
+        Tabell{" "}
+        <span
+          onClick={() => setProgress("export")}
+          className="ml-7 cursor-pointer pl-7 text-pink-500"
+        >
+          TILLFÄLLIG LÄNK TILL NÄSTA STEG
+        </span>
+      </h2>
       <p className="mb-4 text-sm text-gray-600">
         Rader: {rowsData.length} | Kolumner: {columns.length}
       </p>

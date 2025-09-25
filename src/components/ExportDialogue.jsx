@@ -22,9 +22,18 @@ export default function ExportDialogue({
   filename,
   onTryAgain,
   onCancel,
+  setProgress,
 }) {
-  if (!exportStatus) return null; // Don't render anything if there is no status to display
-
+  if (!exportStatus) {
+    setTimeout(() => setProgress("start"), 2000);
+    return (
+      <div className="mt-7 pt-7 text-center text-2xl">
+        We have nothing for you to download at the moment, but you just wait..!
+        <br />
+        🎩🪄
+      </div>
+    );
+  }
   return (
     <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-gray-100 p-4 backdrop-blur-sm sm:p-6">
       <div className="relative w-full max-w-sm rounded-lg bg-white p-6 shadow-xl sm:p-8">
