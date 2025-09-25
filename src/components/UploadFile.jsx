@@ -1,6 +1,7 @@
 import ExcelJS from "exceljs";
 import { useState, useEffect } from "react";
 import Button from "./Button";
+import { workbookToRows } from "../utils/workbookToRows";
 
 // UploadFile tar emot prop "onSubmit"
 export default function UploadFile({
@@ -8,6 +9,7 @@ export default function UploadFile({
   setFile,
   setWorkbook,
   setProgress,
+  setRowData,
 }) {
   // State för att visa formuläret eller startknappen
   const [showForm, setShowForm] = useState(false);
@@ -30,12 +32,14 @@ export default function UploadFile({
     setFile(null); // Rensa filen
   };
 
+  //När Excelfil laddas upp görs den om till en workbook som sparas i state
   useEffect(() => {
     async function fetchExcel() {
       const buffer = await file.arrayBuffer();
       const wb = new ExcelJS.Workbook();
       await wb.xlsx.load(buffer);
       setWorkbook(wb);
+      setRowData(workbookToRows(wb));
     }
 
     if (file) {
