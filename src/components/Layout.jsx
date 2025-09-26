@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <main className="relative z-10 flex-grow">{children}</main>
 
       {/* FOOTER – alltid synlig */}
-      <footer className="relative z-50 bg-indigo-700 text-indigo-100">
+      <footer className="relative z-50 bg-indigo-700 text-indigo-100 mt-6">
         <div className="mx-auto max-w-7xl px-4 py-6 text-center text-sm">
           © {new Date().getFullYear()} Excel Editor — Skapad av State Of Mind
         </div>
