@@ -93,7 +93,7 @@ export default function EditableTable({
     );
 
   return (
-    <div className="p-4">
+    <div className="p-4 relative">
       <h2 className="mb-2 text-xl font-bold text-green-700">
         Tabell{" "}
         {/* <span
