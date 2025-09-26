@@ -48,7 +48,7 @@ export default function UploadFile({
   }, [file, setWorkbook]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-6">
+    <main className="flex min-h-[70vh] flex-col items-center justify-center bg-gray-100 p-6">
       {/* Startknapp */}
       {!showForm && (
         <>
