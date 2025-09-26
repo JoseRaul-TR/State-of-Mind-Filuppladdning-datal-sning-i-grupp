@@ -5,7 +5,7 @@ export default function Button({ buttonText, clickHandler, children, className }
     <button
       onClick={clickHandler}
             // Combine the default styles with any passed-in className
-      className={`rounded bg-indigo-600 px-4 py-2 text-white transition cursor-pointer hover:bg-indigo-700 hover:scale-105 ${className || ''}`}
+      className={`flex items-center justify-center rounded bg-indigo-600 px-4 py-2 text-white transition-all cursor-pointer hover:bg-indigo-700 hover:scale-105 ${className || ''}`}
     >
       {content}
     </button>

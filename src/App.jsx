@@ -44,6 +44,13 @@ function App() {
     }
   };
 
+  // ******* Temporary function to test ExportState = 'error' *******
+  const handleTestExportError = () => {
+    setExportStatus("error");
+    setProgress("export");
+  };
+  // ********************************************************
+
   //Villkorlig visning av komponenter, baserat på progress-state
   return (
     <Layout>
@@ -60,15 +67,26 @@ function App() {
         />
       )}
       {progress === "editTable" && (
-        <EditableTable
-          data={rowData}
-          workbook={workbook}
-          setProgress={setProgress}
-          onDataChange={handleDataChange}
-          onExport={handleExportToPdf}
-        />
+        <>
+          <EditableTable
+            data={rowData}
+            workbook={workbook}
+            setProgress={setProgress}
+            onDataChange={handleDataChange}
+            onExport={handleExportToPdf}
+          />
+          {/********** Temporary button for testint exportStatus error ***********/}{" "}
+          <div className="fixed bottom-4 left-4">
+            <button
+              onClick={handleTestExportError}
+              className="bg-red-700 p-3 text-white"
+            >
+              TEST EXPORT ERROR
+            </button>
+          </div>
+          {/********** End of temporary button for testint exportStatus error ***********/}{" "}
+        </>
       )}
-
       {progress === "export" && (
         <ExportDialogue
           exportStatus={exportStatus}
@@ -76,6 +94,7 @@ function App() {
           filename="edited_table.pdf"
           onCancel={() => setProgress("editTable")}
           onTryAgain={handleExportToPdf}
+          onGoHome={() => setProgress("start")}
         />
       )}
     </Layout>
