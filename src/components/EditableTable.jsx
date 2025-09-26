@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import ExportButton from "./ExportButton";
 
 // Enkel input-cell som behåller fokus när man skriver
 function TableInputCell({ value, onChange }) {
@@ -32,6 +33,7 @@ export default function EditableTable({
   data = [],
   onDataChange,
   setProgress,
+  onExport,
 }) {
   // Lokal state för tabellrader
   const [rowsData, setRowsData] = useState([]);
@@ -94,12 +96,12 @@ export default function EditableTable({
     <div className="p-4">
       <h2 className="mb-2 text-xl font-bold text-green-700">
         Tabell{" "}
-        <span
+        {/* <span
           onClick={() => setProgress("export")}
           className="ml-7 cursor-pointer pl-7 text-pink-500"
         >
           TILLFÄLLIG LÄNK TILL NÄSTA STEG
-        </span>
+        </span> */}
       </h2>
       <p className="mb-4 text-sm text-gray-600">
         Rader: {rowsData.length} | Kolumner: {columns.length}
@@ -140,7 +142,7 @@ export default function EditableTable({
           </tbody>
         </table>
       </div>
-
+      <ExportButton onExport={onExport} />
       {/* Visa datan under tabellen så att man ser ändringar direkt */}
       <pre className="mt-4 rounded bg-gray-100 p-2 text-left">
         {JSON.stringify(rowsData, null, 2)}

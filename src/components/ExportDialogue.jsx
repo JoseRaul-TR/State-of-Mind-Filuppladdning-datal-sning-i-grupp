@@ -6,6 +6,8 @@ import {
   AiOutlineHome,
 } from "react-icons/ai";
 
+import Button from "./Button";
+
 // This component expects props: {
 //  exportStatus, ('success' | 'error')
 //  pdfUrl,
@@ -46,17 +48,17 @@ export default function ExportDialogue({
             <AiOutlineClose className="size-6 sm:size-7" />
           </button>
           <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md bg-gray-800 p-2 px-2 py-1 text-sm whitespace-nowrap text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            Stäng
+            Close
           </span>
         </div>
 
         {exportStatus === "success" ? (
           <div className="flex flex-col items-center justify-center text-center">
             <h3 className="mb-2 text-xl font-bold text-gray-800 sm:text-2xl">
-              Din export har lyckats!
+              Your export has been successful!
             </h3>
             <p className="mb-4 text-sm text-gray-600 sm:text-base">
-              Här är din PDF-fil.
+              Here is the PDF file.
             </p>
             <div className="flex flex-col space-y-3">
               <Button>
@@ -67,7 +69,7 @@ export default function ExportDialogue({
                   className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
                 >
                   <AiOutlineFilePdf className="mr-2" />
-                  Öppna PDF-filen i en ny flik
+                  Open the PDF in a new tab
                 </a>
               </Button>
               <Button>
@@ -77,7 +79,7 @@ export default function ExportDialogue({
                   className="flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:bg-gray-50 sm:px-6 sm:py-3"
                 >
                   <AiOutlineDownload className="mr-2" />
-                  Ladda ner PDF-filen
+                  Download the PDF file
                 </a>
               </Button>
             </div>
@@ -85,17 +87,17 @@ export default function ExportDialogue({
         ) : (
           <div className="flex flex-col items-center justify-center text-center">
             <h3 className="mb-2 text-xl font-bold text-red-600 sm:text-2xl">
-              Din export har inte lyckats.
+              Your export was not successful.
             </h3>
             <p className="mb-4 text-sm text-gray-600 sm:text-base">
-              Vänlingen försök igen eller gå tillbaka till startsidan{" "}
+              Please try again or go back to the home page.{" "}
             </p>
             <div className="flex flex-row space-y-3">
               <Button
                 onClick={onTryAgain}
                 className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
               >
-                <AiOutlineReload className="mr-2" /> Försok igen
+                <AiOutlineReload className="mr-2" />Try again
               </Button>
             </div>
           </div>
