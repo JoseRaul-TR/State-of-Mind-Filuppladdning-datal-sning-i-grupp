@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import ExportButton from "./ExportButton";
 
 // Enkel input-cell som behåller fokus när man skriver
 function TableInputCell({ value, onChange }) {
@@ -31,6 +32,7 @@ export default function EditableTable({
   data = [],
   onDataChange,
   setProgress,
+  onExport,
 }) {
   const [rowsData, setRowsData] = useState([]);
 
@@ -84,15 +86,10 @@ export default function EditableTable({
     );
 
   return (
-    <div className="mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
+    <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
       <h2 className="mb-4 text-2xl font-semibold text-indigo-700">
         Redigerbar tabell
-        <span
-          onClick={() => setProgress("export")}
-          className="ml-6 cursor-pointer text-sm text-indigo-500 hover:text-indigo-700"
-        >
-          Nästa steg →
-        </span>
+
       </h2>
       <p className="mb-6 text-sm text-gray-500">
         Rader: {rowsData.length} | Kolumner: {columns.length}
@@ -133,7 +130,8 @@ export default function EditableTable({
           </tbody>
         </table>
       </div>
-
+      <ExportButton onExport={onExport} />
+      {/* Visa datan under tabellen så att man ser ändringar direkt */}
       <pre className="mt-6 max-h-64 overflow-auto rounded-lg bg-gray-100 p-4 text-left text-sm text-gray-700 shadow-inner">
         {JSON.stringify(rowsData, null, 2)}
       </pre>

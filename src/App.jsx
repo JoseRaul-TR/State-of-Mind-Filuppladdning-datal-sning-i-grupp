@@ -4,6 +4,8 @@ import { useState } from "react";
 import ExportDialogue from "./components/ExportDialogue";
 import UploadFile from "./components/UploadFile";
 import EditableTable from "./components/EditableTable";
+import { generatePdfBlob } from "./utils/pdfGenerator";
+
 import Layout from "./components/Layout"; // <-- Nytt: Layout importeras här
 
 function App() {
@@ -11,7 +13,36 @@ function App() {
   const [file, setFile] = useState(null); //Användarens uppladdade fil
   const [workbook, setWorkbook] = useState(null); //Parsed excel till JS, med ExcelJS
   const [rowData, setRowData] = useState([]); //Data enligt formatet som EditableTable förväntar sig
+  const [editedData, setEditedData] = useState([]); // Trackr när data redigeras i JS
   const [progress, setProgress] = useState("start"); //Trackar användarens position i "flödet". Kan vara: start, editTable, export
+  const [pdfUrl, setPdfUrl] = useState(null); // Trackar pdf URL:en när skappas
+  const [exportStatus, setExportStatus] = useState(null); // Trackar export status (success | error)
+
+  const handleDataChange = (newData) => {
+    setEditedData(newData);
+  };
+
+  const handleExportToPdf = () => {
+    try {
+      const finalData = editedData.length > 0 ? editedData : rowData;
+
+      if (finalData.length === 0) {
+        throw new Error("No data to export.");
+      }
+
+      // Call utility function to generate PDF
+      const pdfBlob = generatePdfBlob(finalData);
+
+      const url = URL.createObjectURL(pdfBlob);
+      setPdfUrl(url);
+      setExportStatus("success");
+      setProgress("export");
+    } catch (error) {
+      console.error("Error generating PDF:", error.message || error);
+      setExportStatus("error");
+      setProgress("export");
+    }
+  };
 
   //Villkorlig visning av komponenter, baserat på progress-state
   return (
@@ -33,9 +64,21 @@ function App() {
           data={rowData}
           workbook={workbook}
           setProgress={setProgress}
+          onDataChange={handleDataChange}
+          onExport={handleExportToPdf}
         />
       )}
-      {progress === "export" && <ExportDialogue setProgress={setProgress} />}
+
+      {progress === "export" && (
+        <ExportDialogue
+          exportStatus={exportStatus}
+          pdfUrl={pdfUrl}
+          filename="edited_table.pdf"
+          onCancel={() => setProgress("editTable")}
+          onTryAgain={handleExportToPdf}
+        />
+      )}
+    </>
     </Layout>
   );
 }
