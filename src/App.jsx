@@ -48,7 +48,7 @@ function App() {
   return (
     <Layout>
       {" "}
-      {/* <-- Nytt: Allt innehåll omsluts av Layout så header/footer syns */}
+      {/* <-- Allt innehåll omsluts av Layout så header/footer syns */}
       {progress === "start" && (
         <UploadFile
           file={file}
@@ -60,15 +60,16 @@ function App() {
         />
       )}
       {progress === "editTable" && (
-        <EditableTable
-          data={rowData}
-          workbook={workbook}
-          setProgress={setProgress}
-          onDataChange={handleDataChange}
-          onExport={handleExportToPdf}
-        />
+        <>
+          <EditableTable
+            data={rowData}
+            workbook={workbook}
+            setProgress={setProgress}
+            onDataChange={handleDataChange}
+            onExport={handleExportToPdf}
+          />
+        </>
       )}
-
       {progress === "export" && (
         <ExportDialogue
           exportStatus={exportStatus}
