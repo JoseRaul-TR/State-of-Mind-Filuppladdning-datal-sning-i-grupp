@@ -89,7 +89,6 @@ export default function EditableTable({
     <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
       <h2 className="mb-4 text-2xl font-semibold text-indigo-700">
         Redigerbar tabell
-
       </h2>
       <p className="mb-6 text-sm text-gray-500">
         Rader: {rowsData.length} | Kolumner: {columns.length}

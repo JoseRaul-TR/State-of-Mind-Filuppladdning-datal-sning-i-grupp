@@ -3,21 +3,10 @@ import {
   AiOutlineDownload,
   AiOutlineClose,
   AiOutlineReload,
-  AiOutlineHome,
 } from "react-icons/ai";
-
 import Button from "./Button";
 
-// This component expects props: {
-//  exportStatus, ('success' | 'error')
-//  pdfUrl,
-//  filename,
-//  onTryAgain,
-//  onCancle'
-// } from parent component
-// 'exportStatus' can be 'success' or 'error'
-// To test it also takes onTryAgain and onCancel-props
-
+// Props: exportStatus, pdfUrl, filename, onTryAgain, onCancel
 export default function ExportDialogue({
   exportStatus,
   pdfUrl,
@@ -29,17 +18,18 @@ export default function ExportDialogue({
   if (!exportStatus) {
     setTimeout(() => setProgress("start"), 2000);
     return (
-      <div className="mt-7 pt-7 text-center text-2xl">
+      <div className="relative z-10 mt-7 pt-7 text-center text-2xl">
         We have nothing for you to download at the moment, but you just wait..!
         <br />
         🎩🪄
       </div>
     );
   }
+
   return (
-    <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-gray-100 p-4 backdrop-blur-sm sm:p-6">
+    <div className="bg-opacity-50 fixed inset-0 z-40 flex items-center justify-center bg-gray-100 p-4 backdrop-blur-sm sm:p-6">
       <div className="relative w-full max-w-sm rounded-lg bg-white p-6 shadow-xl sm:p-8">
-        {/* Close button with tooltip for export modal */}
+        {/* Close button */}
         <div className="group absolute top-2 right-2 sm:top-4 sm:right-4">
           <button
             onClick={onCancel}
@@ -47,7 +37,7 @@ export default function ExportDialogue({
           >
             <AiOutlineClose className="size-6 sm:size-7" />
           </button>
-          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md bg-gray-800 p-2 px-2 py-1 text-sm whitespace-nowrap text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 rounded-md bg-gray-800 p-2 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             Close
           </span>
         </div>
@@ -63,10 +53,10 @@ export default function ExportDialogue({
             <div className="flex flex-col space-y-3">
               <Button>
                 <a
-                  href={pdfUrl} // Takes pdfUrl here
+                  href={pdfUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
+                  className="flex items-center justify-center text-sm font-medium text-white"
                 >
                   <AiOutlineFilePdf className="mr-2" />
                   Open the PDF in a new tab
@@ -74,9 +64,9 @@ export default function ExportDialogue({
               </Button>
               <Button>
                 <a
-                  href={pdfUrl} // Takes pdfUrl here for download
-                  download={filename} // Set the filename for donwloading
-                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
+                  href={pdfUrl}
+                  download={filename}
+                  className="flex items-center justify-center text-sm font-medium text-white"
                 >
                   <AiOutlineDownload className="mr-2" />
                   Download the PDF file
@@ -90,12 +80,12 @@ export default function ExportDialogue({
               Your export was not successful.
             </h3>
             <p className="mb-4 text-sm text-gray-600 sm:text-base">
-              Please try again or go back to the home page.{" "}
+              Please try again or go back to the home page.
             </p>
             <div className="flex flex-row space-y-3">
               <Button
                 onClick={onTryAgain}
-                className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
+                className="flex items-center justify-center text-sm font-medium text-white"
               >
                 <AiOutlineReload className="mr-2" />
                 Try again

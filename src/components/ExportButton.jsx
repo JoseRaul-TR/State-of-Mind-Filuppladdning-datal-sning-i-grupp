@@ -3,11 +3,10 @@ import { AiOutlineFilePdf } from "react-icons/ai";
 
 export default function ExportButton({ onExport }) {
   return (
-    // Fixed position to make it float on the bottom right corner
-    <div className="fixed right-6 bottom-6 z-50">
+    <div className="fixed right-6 bottom-6 z-40">
       <Button
         clickHandler={onExport}
-        className="!h-18 !w-18 !p-4 flex items-center justify-center !rounded-full !shadow-xl"
+        className="flex !h-18 !w-18 items-center justify-center !rounded-full !p-4 !shadow-xl"
         buttonText={<AiOutlineFilePdf className="text-4xl text-white" />}
       />
     </div>
