@@ -78,7 +78,6 @@ function App() {
           onTryAgain={handleExportToPdf}
         />
       )}
-    </>
     </Layout>
   );
 }
