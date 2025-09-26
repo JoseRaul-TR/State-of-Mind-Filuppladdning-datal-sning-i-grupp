@@ -54,7 +54,7 @@ export default function UploadFile({
         <>
           <button
             onClick={() => setShowForm(true)}
-            className="rounded-lg bg-indigo-600 px-6 py-3 text-white shadow transition hover:bg-indigo-700"
+            className="px14 rounded-lg bg-indigo-600 px-12 py-6 text-white shadow transition hover:bg-indigo-700"
           >
             UPLOAD FILE
           </button>
