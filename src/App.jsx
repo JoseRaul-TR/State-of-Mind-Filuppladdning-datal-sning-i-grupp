@@ -55,7 +55,7 @@ function App() {
   return (
     <Layout>
       {" "}
-      {/* <-- Nytt: Allt innehåll omsluts av Layout så header/footer syns */}
+      {/* <-- Allt innehåll omsluts av Layout så header/footer syns */}
       {progress === "start" && (
         <UploadFile
           file={file}
@@ -66,6 +66,7 @@ function App() {
           setRowData={setRowData}
         />
       )}
+      
       {progress === "editTable" && (
         <>
           <EditableTable
@@ -75,6 +76,7 @@ function App() {
             onDataChange={handleDataChange}
             onExport={handleExportToPdf}
           />
+
           {/********** Temporary button for testint exportStatus error ***********/}{" "}
           <div className="fixed bottom-4 left-4">
             <button
@@ -87,6 +89,7 @@ function App() {
           {/********** End of temporary button for testint exportStatus error ***********/}{" "}
         </>
       )}
+      
       {progress === "export" && (
         <ExportDialogue
           exportStatus={exportStatus}
