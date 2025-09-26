@@ -5,7 +5,6 @@ import UploadFile from "./components/UploadFile";
 import EditableTable from "./components/EditableTable";
 import jsPDF from "jspdf";
 import { applyPlugin } from "jspdf-autotable";
-
 // Explicitly apply the plugin once outside the component
 // This ensures it runs and extends the jsPDF prototype.
 applyPlugin(jsPDF);
@@ -28,21 +27,33 @@ function App() {
     try {
       const doc = new jsPDF();
 
-      // ––– Debug code –––
-      // if (typeof doc.autoTable !== "function") {
-      //   console.error("jsPDF-Autotable is not loaded correctly!");
-      //   // Fallback to error handling or alert user
-      //   throw new Error("PDF generation dependency missing.");
-      // }
-      // ––– End Debug code –––
-      
       const finalData = editedData.length > 0 ? editedData : rowData;
+
+      // 🔍 DEBUG STEP 1: Check the data being used
+      console.log("Final Data Length:", finalData.length);
+      console.log("Final Data:", finalData);
+      // 🚨 IMPORTANT: Check the console after clicking export!
+
+      if (finalData.length === 0) {
+        throw new Error("No data to export.");
+      }
 
       const columns = Object.keys(finalData[0] || {}).map((key) => ({
         header: key.replace(/_/g, ""),
         dataKey: key,
       }));
       const rows = finalData;
+
+      // 🔍 DEBUG STEP 2: Check the mapped structures
+      console.log(
+        "AutoTable Head:",
+        columns.map((col) => col.header),
+      );
+      console.log(
+        "AutoTable Body Row 1 (values):",
+        rows.map((row) => columns.map((col) => row[col.dataKey]))[0],
+      );
+      // The inner array (the body row) should contain cell *values*, not keys or undefined.
 
       doc.autoTable({
         head: [columns.map((col) => col.header)],
@@ -51,9 +62,10 @@ function App() {
       });
 
       const pdfBlob = doc.output("blob");
+
       const url = URL.createObjectURL(pdfBlob);
       setPdfUrl(url);
-      setExportStatus("succes");
+      setExportStatus("success");
       setProgress("export");
     } catch (error) {
       console.error("Error generating PDF:", error);

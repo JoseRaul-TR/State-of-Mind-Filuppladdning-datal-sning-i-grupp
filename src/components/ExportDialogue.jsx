@@ -66,7 +66,7 @@ export default function ExportDialogue({
                   href={pdfUrl} // Takes pdfUrl here
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
+                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
                 >
                   <AiOutlineFilePdf className="mr-2" />
                   Open the PDF in a new tab
@@ -76,7 +76,7 @@ export default function ExportDialogue({
                 <a
                   href={pdfUrl} // Takes pdfUrl here for download
                   download={filename} // Set the filename for donwloading
-                  className="flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:bg-gray-50 sm:px-6 sm:py-3"
+                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
                 >
                   <AiOutlineDownload className="mr-2" />
                   Download the PDF file
@@ -95,9 +95,10 @@ export default function ExportDialogue({
             <div className="flex flex-row space-y-3">
               <Button
                 onClick={onTryAgain}
-                className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
+                className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
               >
-                <AiOutlineReload className="mr-2" />Try again
+                <AiOutlineReload className="mr-2" />
+                Try again
               </Button>
             </div>
           </div>
