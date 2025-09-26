@@ -59,23 +59,27 @@ export default function ExportDialogue({
               Här är din PDF-fil.
             </p>
             <div className="flex flex-col space-y-3">
-              <a
-                href={pdfUrl} // Takes pdfUrl here
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
-              >
-                <AiOutlineFilePdf className="mr-2" />
-                Öppna PDF-filen i en ny flik
-              </a>
-              <a
-                href={pdfUrl} // Takes pdfUrl here for download
-                download={filename} // Set the filename for donwloading
-                className="flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:bg-gray-50 sm:px-6 sm:py-3"
-              >
-                <AiOutlineDownload className="mr-2" />
-                Ladda ner PDF-filen
-              </a>
+              <Button>
+                <a
+                  href={pdfUrl} // Takes pdfUrl here
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
+                >
+                  <AiOutlineFilePdf className="mr-2" />
+                  Öppna PDF-filen i en ny flik
+                </a>
+              </Button>
+              <Button>
+                <a
+                  href={pdfUrl} // Takes pdfUrl here for download
+                  download={filename} // Set the filename for donwloading
+                  className="flex cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all hover:scale-105 hover:bg-gray-50 sm:px-6 sm:py-3"
+                >
+                  <AiOutlineDownload className="mr-2" />
+                  Ladda ner PDF-filen
+                </a>
+              </Button>
             </div>
           </div>
         ) : (
@@ -87,12 +91,12 @@ export default function ExportDialogue({
               Vänlingen försök igen eller gå tillbaka till startsidan{" "}
             </p>
             <div className="flex flex-row space-y-3">
-              <button
+              <Button
                 onClick={onTryAgain}
                 className="flex cursor-pointer items-center justify-center rounded-lg border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-all hover:scale-105 hover:bg-indigo-700 sm:px-6 sm:py-3"
               >
                 <AiOutlineReload className="mr-2" /> Försok igen
-              </button>
+              </Button>
             </div>
           </div>
         )}
