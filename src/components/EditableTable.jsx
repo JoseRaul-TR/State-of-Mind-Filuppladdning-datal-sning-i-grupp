@@ -10,7 +10,6 @@ import ExportButton from "./ExportButton";
 function TableInputCell({ value, onChange }) {
   const [inputValue, setInputValue] = useState(value);
 
-  // Om värdet från props ändras uppdateras local state
   useEffect(() => {
     setInputValue(value);
   }, [value]);
@@ -19,11 +18,11 @@ function TableInputCell({ value, onChange }) {
     <input
       type="text"
       value={inputValue}
-      className="w-full rounded border p-1 focus:outline-blue-400"
+      className="w-full rounded-lg border-2 border-indigo-300 bg-indigo-50 p-2 text-gray-700 shadow-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-400 focus:outline-none"
       onChange={(e) => setInputValue(e.target.value)}
-      onBlur={() => onChange(inputValue)} // uppdatera när man lämnar cellen
+      onBlur={() => onChange(inputValue)}
       onKeyDown={(e) => {
-        if (e.key === "Enter") onChange(inputValue); // uppdatera även på Enter
+        if (e.key === "Enter") onChange(inputValue);
       }}
     />
   );
@@ -35,10 +34,8 @@ export default function EditableTable({
   setProgress,
   onExport,
 }) {
-  // Lokal state för tabellrader
   const [rowsData, setRowsData] = useState([]);
 
-  // Synkronisera props-data med lokal state
   useEffect(() => {
     if (data && data.length > 0) {
       setRowsData(data);
@@ -47,18 +44,14 @@ export default function EditableTable({
     }
   }, [data]);
 
-  // Uppdatera cellvärde och meddela föräldern
   const handleCellChange = (rowIndex, columnId, newValue) => {
     const updatedRows = [...rowsData];
     updatedRows[rowIndex] = { ...updatedRows[rowIndex], [columnId]: newValue };
     setRowsData(updatedRows);
     if (onDataChange) onDataChange(updatedRows);
-
-    // Test-logg så att man ser när värdet ändras
     console.log("Cell ändrad:", rowIndex, columnId, newValue);
   };
 
-  // Funktion för att generera kolumner dynamiskt
   const generateColumns = () => {
     if (!rowsData.length) return [];
     const keys = Object.keys(rowsData[0]);
@@ -84,38 +77,33 @@ export default function EditableTable({
 
   if (!rowsData.length)
     return (
-      <div className="border-2 border-dashed border-blue-300 p-6 text-center">
-        <h2 className="mb-2 text-xl font-bold text-blue-600">
+      <div className="mx-auto mt-6 w-full max-w-3xl rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 p-8 text-center shadow">
+        <h2 className="mb-2 text-2xl font-semibold text-indigo-700">
           Redigerbar tabell
         </h2>
-        <p className="text-gray-500">Ingen data att visa ännu</p>
+        <p className="text-gray-600">Ingen data att visa ännu</p>
       </div>
     );
 
   return (
-    <div className="p-4 relative">
-      <h2 className="mb-2 text-xl font-bold text-green-700">
-        Tabell{" "}
-        {/* <span
-          onClick={() => setProgress("export")}
-          className="ml-7 cursor-pointer pl-7 text-pink-500"
-        >
-          TILLFÄLLIG LÄNK TILL NÄSTA STEG
-        </span> */}
+    <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
+      <h2 className="mb-4 text-2xl font-semibold text-indigo-700">
+        Redigerbar tabell
+
       </h2>
-      <p className="mb-4 text-sm text-gray-600">
+      <p className="mb-6 text-sm text-gray-500">
         Rader: {rowsData.length} | Kolumner: {columns.length}
       </p>
 
-      <div className="overflow-x-auto rounded border border-gray-300">
-        <table className="min-w-full">
-          <thead className="bg-gray-100">
+      <div className="overflow-x-auto rounded-lg border border-indigo-200 shadow">
+        <table className="min-w-full divide-y divide-indigo-200">
+          <thead className="bg-indigo-100">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="border-b px-4 py-2 text-left font-medium text-gray-700"
+                    className="px-4 py-3 text-left text-sm font-medium text-indigo-700"
                   >
                     {flexRender(
                       header.column.columnDef.header,
@@ -126,14 +114,14 @@ export default function EditableTable({
               </tr>
             ))}
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {table.getRowModel().rows.map((row, index) => (
               <tr
                 key={row.id}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                className={index % 2 === 0 ? "bg-white" : "bg-indigo-50/50"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="border-b px-4 py-2">
+                  <td key={cell.id} className="px-4 py-3">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -144,7 +132,7 @@ export default function EditableTable({
       </div>
       <ExportButton onExport={onExport} />
       {/* Visa datan under tabellen så att man ser ändringar direkt */}
-      <pre className="mt-4 rounded bg-gray-100 p-2 text-left">
+      <pre className="mt-6 max-h-64 overflow-auto rounded-lg bg-gray-100 p-4 text-left text-sm text-gray-700 shadow-inner">
         {JSON.stringify(rowsData, null, 2)}
       </pre>
     </div>

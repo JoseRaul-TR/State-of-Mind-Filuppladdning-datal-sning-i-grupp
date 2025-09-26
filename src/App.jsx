@@ -1,9 +1,12 @@
+// App.jsx
 import { useState } from "react";
 
 import ExportDialogue from "./components/ExportDialogue";
 import UploadFile from "./components/UploadFile";
 import EditableTable from "./components/EditableTable";
 import { generatePdfBlob } from "./utils/pdfGenerator";
+
+import Layout from "./components/Layout"; // <-- Nytt: Layout importeras här
 
 function App() {
   // State för att spara den fil användaren väljer
@@ -43,7 +46,9 @@ function App() {
 
   //Villkorlig visning av komponenter, baserat på progress-state
   return (
-    <>
+    <Layout>
+      {" "}
+      {/* <-- Nytt: Allt innehåll omsluts av Layout så header/footer syns */}
       {progress === "start" && (
         <UploadFile
           file={file}
@@ -54,7 +59,6 @@ function App() {
           setRowData={setRowData}
         />
       )}
-
       {progress === "editTable" && (
         <EditableTable
           data={rowData}
@@ -75,6 +79,7 @@ function App() {
         />
       )}
     </>
+    </Layout>
   );
 }
 
