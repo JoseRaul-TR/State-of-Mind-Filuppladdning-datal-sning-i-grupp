@@ -9,8 +9,9 @@ export default function Button({
   return (
     <button
       onClick={clickHandler}
-      // Combine the default styles with any passed-in className
-      className={`cursor-pointer rounded bg-indigo-600 px-4 py-2 text-white transition hover:scale-105 hover:bg-indigo-700 ${className || ""}`}
+
+            // Combine the default styles with any passed-in className
+      className={`flex items-center justify-center rounded cursor-pointer bg-indigo-600 px-4 py-2 text-white transition-all hover:bg-indigo-700 hover:scale-105 ${className || ''}`}
     >
       {content}
     </button>

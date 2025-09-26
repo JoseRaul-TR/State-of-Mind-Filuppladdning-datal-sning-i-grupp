@@ -5,18 +5,7 @@ import {
   AiOutlineReload,
   AiOutlineHome,
 } from "react-icons/ai";
-
 import Button from "./Button";
-
-// This component expects props: {
-//  exportStatus, ('success' | 'error')
-//  pdfUrl,
-//  filename,
-//  onTryAgain,
-//  onCancle'
-// } from parent component
-// 'exportStatus' can be 'success' or 'error'
-// To test it also takes onTryAgain and onCancel-props
 
 export default function ExportDialogue({
   exportStatus,
@@ -24,8 +13,10 @@ export default function ExportDialogue({
   filename,
   onTryAgain,
   onCancel,
+  onGoHome,
   setProgress,
 }) {
+  /* Behöver vi den här längre? */
   if (!exportStatus) {
     setTimeout(() => setProgress("start"), 2000);
     return (
@@ -54,51 +45,98 @@ export default function ExportDialogue({
 
         {exportStatus === "success" ? (
           <div className="flex flex-col items-center justify-center text-center">
+            <svg
+              className="mx-auto mb-4 size-16 text-green-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+
             <h3 className="mb-2 text-xl font-bold text-gray-800 sm:text-2xl">
               Your export has been successful!
             </h3>
             <p className="mb-4 text-sm text-gray-600 sm:text-base">
               Here is the PDF file.
             </p>
-            <div className="flex flex-col space-y-3">
+
+            <div className="flex w-full flex-col space-y-3">
               <Button>
                 <a
                   href={pdfUrl} // Takes pdfUrl here
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
+                  className="flex w-full items-center justify-center text-white"
                 >
-                  <AiOutlineFilePdf className="mr-2" />
-                  Open the PDF in a new tab
+                  <AiOutlineFilePdf className="mr-2 size-5" />
+                  Open PDF
                 </a>
               </Button>
               <Button>
                 <a
                   href={pdfUrl} // Takes pdfUrl here for download
                   download={filename} // Set the filename for donwloading
-                  className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
+                  className="flex w-full items-center justify-center text-white"
                 >
-                  <AiOutlineDownload className="mr-2" />
-                  Download the PDF file
+                  <AiOutlineDownload className="mr-2 size-5" />
+                  Download PDF
                 </a>
+              </Button>
+
+              <Button
+                clickHandler={onGoHome}
+                className="!border !border-indigo-600 !bg-white !text-indigo-600 hover:!border-indigo-700 hover:!bg-indigo-50 hover:!text-indigo-700"
+              >
+                <AiOutlineHome className="mr-2 size-5" />
+                Start new upload
               </Button>
             </div>
           </div>
         ) : (
+          // Export Error Status
           <div className="flex flex-col items-center justify-center text-center">
-            <h3 className="mb-2 text-xl font-bold text-red-600 sm:text-2xl">
-              Your export was not successful.
+            {/* Error Icon */}
+            <svg
+              className="mx-auto mb-4 size-16 text-red-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              ></path>
+            </svg>
+            <h3 className="text-black-600 mb-2 text-xl font-bold sm:text-2xl">
+              Export Failed.
             </h3>
             <p className="mb-4 text-sm text-gray-600 sm:text-base">
-              Please try again or go back to the home page.{" "}
+              We encountered an issue generating your PDF. Please try again or
+              go back to the home page.
             </p>
-            <div className="flex flex-row space-y-3">
-              <Button
-                onClick={onTryAgain}
-                className="flex cursor-pointer items-center justify-center text-sm font-medium text-white transition-all"
-              >
-                <AiOutlineReload className="mr-2" />
+            {/* Buttons container */}
+            <div className="flex w-full flex-col space-y-3">
+              <Button clickHandler={onTryAgain}>
+                <AiOutlineReload className="mr-2 size-5" />
                 Try again
+              </Button>
+
+              <Button
+                clickHandler={onGoHome}
+                className="!border !border-indigo-600 !bg-white !text-indigo-600 hover:!border-indigo-700 hover:!bg-indigo-50 hover:!text-indigo-700"
+              >
+                <AiOutlineHome className="mr-2 size-5" />
+                Start new upload
               </Button>
             </div>
           </div>
