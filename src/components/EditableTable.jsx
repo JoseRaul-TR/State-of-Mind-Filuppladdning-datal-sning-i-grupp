@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-table";
 import ExportButton from "./ExportButton";
 
-// Enkel input-cell som behåller fokus när man skriver
+// Enkel input-cell
 function TableInputCell({ value, onChange }) {
   const [inputValue, setInputValue] = useState(value);
 
@@ -28,31 +28,32 @@ function TableInputCell({ value, onChange }) {
   );
 }
 
-export default function EditableTable({
-  data = [],
-  onDataChange,
-  setProgress,
-  onExport,
-}) {
+export default function EditableTable({ data = [], onDataChange, onExport }) {
   const [rowsData, setRowsData] = useState([]);
+  const [process, setProcess] = useState("start"); // 🔸 NEW: intern state för processen
 
+  // När data ändras från App → uppdatera state här inne
   useEffect(() => {
     if (data && data.length > 0) {
       setRowsData(data);
+      setProcess("loaded");
     } else {
       setRowsData([]);
+      setProcess("start");
     }
   }, [data]);
 
+  // När en cell editeras
   const handleCellChange = (rowIndex, columnId, newValue) => {
     const updatedRows = [...rowsData];
     updatedRows[rowIndex] = { ...updatedRows[rowIndex], [columnId]: newValue };
     setRowsData(updatedRows);
-    if (onDataChange) onDataChange(updatedRows);
-    console.log("Cell ändrad:", rowIndex, columnId, newValue);
+    onDataChange?.(updatedRows);
+    if (process !== "edited") setProcess("edited");
   };
 
-  const generateColumns = () => {
+  // Dynamiskt bygga kolumner
+  const columns = useMemo(() => {
     if (!rowsData.length) return [];
     const keys = Object.keys(rowsData[0]);
     return keys.map((key) => ({
@@ -65,9 +66,7 @@ export default function EditableTable({
         />
       ),
     }));
-  };
-
-  const columns = generateColumns();
+  }, [rowsData]);
 
   const table = useReactTable({
     data: rowsData,
@@ -75,24 +74,32 @@ export default function EditableTable({
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (!rowsData.length)
+  if (!rowsData.length) {
     return (
       <div className="mx-auto mt-6 w-full max-w-3xl rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 p-8 text-center shadow">
         <h2 className="mb-2 text-2xl font-semibold text-indigo-700">
           Editable Table
         </h2>
         <p className="text-gray-600">No data shows yet</p>
+        <p className="mt-2 text-xs text-gray-500">Status: {process}</p>
       </div>
     );
+  }
 
   return (
     <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
-      <h2 className="mb-4 text-2xl font-semibold text-indigo-700">
-        Editable Table
-      </h2>
-      <p className="mb-6 text-sm text-gray-500">
-        Rows: {rowsData.length} | Columns: {columns.length}
-      </p>
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold text-indigo-700">
+            Editable Table
+          </h2>
+          <p className="text-sm text-gray-500">
+            Rows: {rowsData.length} | Columns: {columns.length} | Status:{" "}
+            {process}
+          </p>
+        </div>
+        <ExportButton onExport={onExport} />
+      </div>
 
       <div className="overflow-x-auto rounded-lg border border-indigo-200 shadow">
         <table className="min-w-full divide-y divide-indigo-200">
@@ -106,7 +113,7 @@ export default function EditableTable({
                   >
                     {flexRender(
                       header.column.columnDef.header,
-                      header.getContext(),
+                      header.getContext()
                     )}
                   </th>
                 ))}
@@ -129,8 +136,7 @@ export default function EditableTable({
           </tbody>
         </table>
       </div>
-      <ExportButton onExport={onExport} />
-      {/* Visa datan under tabellen så att man ser ändringar direkt */}
+
       <pre className="mt-6 max-h-64 overflow-auto rounded-lg bg-gray-100 p-4 text-left text-sm text-gray-700 shadow-inner">
         {JSON.stringify(rowsData, null, 2)}
       </pre>

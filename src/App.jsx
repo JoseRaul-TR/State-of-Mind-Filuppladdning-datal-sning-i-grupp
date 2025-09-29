@@ -72,7 +72,6 @@ function App() {
           <EditableTable
             data={rowData}
             workbook={workbook}
-            setProgress={setProgress}
             onDataChange={handleDataChange}
             onExport={handleExportToPdf}
           />
