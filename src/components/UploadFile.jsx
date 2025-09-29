@@ -46,7 +46,8 @@ export default function UploadFile({
     if (file) {
       fetchExcel();
     }
-  }, [file, setWorkbook]);
+  }, [file, setWorkbook, setRowData]); // 🔸 FIX
+
 
   return (
     <main className="flex min-h-[70vh] flex-col items-center justify-center bg-gray-100 p-6">
