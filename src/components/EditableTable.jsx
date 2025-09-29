@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-table";
 import ExportButton from "./ExportButton";
 
-// Enkel input-cell
+// Enkel input-cell som behåller fokus när man skriver
 function TableInputCell({ value, onChange }) {
   const [inputValue, setInputValue] = useState(value);
 
@@ -28,48 +28,11 @@ function TableInputCell({ value, onChange }) {
   );
 }
 
-export default function EditableTable({ data = [], onDataChange, onExport }) {
+export default function EditableTable({ data = [], onDataChange, onExport, onReset }) {
   const [rowsData, setRowsData] = useState([]);
-  const [process, setProcess] = useState("start"); // 🔸 NEW: intern state för processen
+  const [process, setProcess] = useState("start"); // 🔸 intern state
 
-export default function EditableTable({ data = [], onDataChange, onExport, onReset }) { // 🔸 NEW onReset
-  const [rowsData, setRowsData] = useState([]);
-  const [process, setProcess] = useState("start");
-
-  // 🔸 NEW reset-funktion
-  const handleResetAll = () => {
-    setRowsData([]);
-    setProcess("start");
-    onDataChange?.([]); // meddela App att tabellen är tom
-    onReset?.();        // meddela App att hela flödet ska startas om
-  };
-
-  return (
-    <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold text-indigo-700">Editable Table</h2>
-          <p className="text-sm text-gray-500">
-            Rows: {rowsData.length} | Columns: {columns.length} | Status: {process}
-          </p>
-        </div>
-
-        {/* 🔸 NEW: Reset-knapp i headern */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={handleResetAll}
-            className="rounded-lg border border-red-300 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
-          >
-            Starta om
-          </button>
-          <ExportButton onExport={onExport} />
-        </div>
-      </div>
-      
-      {/* Resten av tabellen oförändrat */}
-
-  // När data ändras från App → uppdatera state här inne
+  // När inkommande data ändras
   useEffect(() => {
     if (data && data.length > 0) {
       setRowsData(data);
@@ -80,16 +43,16 @@ export default function EditableTable({ data = [], onDataChange, onExport, onRes
     }
   }, [data]);
 
-  // När en cell editeras
+  // När en cell ändras
   const handleCellChange = (rowIndex, columnId, newValue) => {
     const updatedRows = [...rowsData];
     updatedRows[rowIndex] = { ...updatedRows[rowIndex], [columnId]: newValue };
     setRowsData(updatedRows);
-    onDataChange?.(updatedRows);
+    if (onDataChange) onDataChange(updatedRows);
     if (process !== "edited") setProcess("edited");
   };
 
-  // Dynamiskt bygga kolumner
+  // Bygg kolumner dynamiskt
   const columns = useMemo(() => {
     if (!rowsData.length) return [];
     const keys = Object.keys(rowsData[0]);
@@ -111,7 +74,16 @@ export default function EditableTable({ data = [], onDataChange, onExport, onRes
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (!rowsData.length) {
+  // 🔸 reset-funktion
+  const handleResetAll = () => {
+    setRowsData([]);
+    setProcess("start");
+    onDataChange?.([]);
+    onReset?.();
+  };
+
+  // Om ingen data finns
+  if (!rowsData.length)
     return (
       <div className="mx-auto mt-6 w-full max-w-3xl rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 p-8 text-center shadow">
         <h2 className="mb-2 text-2xl font-semibold text-indigo-700">
@@ -119,23 +91,38 @@ export default function EditableTable({ data = [], onDataChange, onExport, onRes
         </h2>
         <p className="text-gray-600">No data shows yet</p>
         <p className="mt-2 text-xs text-gray-500">Status: {process}</p>
+        <button
+          type="button"
+          onClick={handleResetAll}
+          className="mt-4 rounded-lg border border-indigo-300 px-4 py-2 text-sm text-indigo-700 hover:bg-indigo-50"
+        >
+          Starta om
+        </button>
       </div>
     );
-  }
 
+  // Om data finns → visa tabell
   return (
     <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-indigo-700">
-            Editable Table
-          </h2>
+          <h2 className="text-2xl font-semibold text-indigo-700">Editable Table</h2>
           <p className="text-sm text-gray-500">
-            Rows: {rowsData.length} | Columns: {columns.length} | Status:{" "}
-            {process}
+            Rows: {rowsData.length} | Columns: {columns.length} | Status: {process}
           </p>
         </div>
-        <ExportButton onExport={onExport} />
+
+        {/* 🔸 reset-knapp + export-knapp */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleResetAll}
+            className="rounded-lg border border-red-300 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+          >
+            Starta om
+          </button>
+          <ExportButton onExport={onExport} />
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg border border-indigo-200 shadow">
