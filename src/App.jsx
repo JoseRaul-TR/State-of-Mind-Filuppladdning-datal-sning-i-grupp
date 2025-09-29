@@ -77,7 +77,7 @@ function App() {
             onExport={handleExportToPdf}
           />
 
-          {/********** Temporary button for testint exportStatus error ***********/}{" "}
+          {/********** Temporary button for testing exportStatus error ***********/}{" "}
           <div className="fixed bottom-4 left-4">
             <button
               onClick={handleTestExportError}
@@ -86,7 +86,7 @@ function App() {
               TEST EXPORT ERROR
             </button>
           </div>
-          {/********** End of temporary button for testint exportStatus error ***********/}{" "}
+          {/********** End of temporary button for testing exportStatus error ***********/}{" "}
         </>
       )}
       
