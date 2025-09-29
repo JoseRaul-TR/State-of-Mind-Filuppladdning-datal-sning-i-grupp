@@ -32,6 +32,43 @@ export default function EditableTable({ data = [], onDataChange, onExport }) {
   const [rowsData, setRowsData] = useState([]);
   const [process, setProcess] = useState("start"); // 🔸 NEW: intern state för processen
 
+export default function EditableTable({ data = [], onDataChange, onExport, onReset }) { // 🔸 NEW onReset
+  const [rowsData, setRowsData] = useState([]);
+  const [process, setProcess] = useState("start");
+
+  // 🔸 NEW reset-funktion
+  const handleResetAll = () => {
+    setRowsData([]);
+    setProcess("start");
+    onDataChange?.([]); // meddela App att tabellen är tom
+    onReset?.();        // meddela App att hela flödet ska startas om
+  };
+
+  return (
+    <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
+      <div className="mb-4 flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-semibold text-indigo-700">Editable Table</h2>
+          <p className="text-sm text-gray-500">
+            Rows: {rowsData.length} | Columns: {columns.length} | Status: {process}
+          </p>
+        </div>
+
+        {/* 🔸 NEW: Reset-knapp i headern */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleResetAll}
+            className="rounded-lg border border-red-300 px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+          >
+            Starta om
+          </button>
+          <ExportButton onExport={onExport} />
+        </div>
+      </div>
+      
+      {/* Resten av tabellen oförändrat */}
+
   // När data ändras från App → uppdatera state här inne
   useEffect(() => {
     if (data && data.length > 0) {

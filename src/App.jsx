@@ -68,13 +68,21 @@ function App() {
       )}
       
       {progress === "editTable" && (
-        <>
-          <EditableTable
-            data={rowData}
-            workbook={workbook}
-            onDataChange={handleDataChange}
-            onExport={handleExportToPdf}
-          />
+  <>
+    <EditableTable
+      data={rowData}
+      onDataChange={handleDataChange}
+      onExport={handleExportToPdf}
+      onReset={() => {                 // 🔸 NEW
+        setFile(null);                 // nollställ fil
+        setWorkbook(null);             // nollställ workbook
+        setRowData([]);                // töm tabell-data
+        setEditedData([]);             // töm redigerad data
+        setPdfUrl(null);               // nollställ pdf-url
+        setExportStatus(null);         // nollställ exportstatus
+        setProgress("start");          // tillbaka till start
+      }}
+    />
 
           {/********** Temporary button for testing exportStatus error ***********/}{" "}
           <div className="fixed bottom-4 left-4">
