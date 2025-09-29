@@ -11,28 +11,29 @@ export default function UploadFile({
   setProgress,
   setRowData,
 }) {
-  // State för att visa formuläret eller startknappen
   const [showForm, setShowForm] = useState(false);
+  const [error, setError] = useState(null); // 🔸 NEW: error state
 
-  // När användaren väljer en fil i inputfältet
-  const handleFileChange = (e) => setFile(e.target.files[0]);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+    setError(null); // 🔸 NEW: rensa error om man väljer en fil
+  };
 
-  // När användaren klickar på Submit
   const handleSubmit = () => {
     if (file) {
       setProgress("editTable");
+      setError(null); // 🔸 NEW
     } else {
-      alert("Please select an Excel file");
+      setError("Please select an Excel file"); // 🔸 NEW: ersätter alert
     }
   };
 
-  // När användaren klickar på Cancel
   const handleCancel = () => {
-    setShowForm(false); // Göm formuläret
-    setFile(null); // Rensa filen
+    setShowForm(false);
+    setFile(null);
+    setError(null); // 🔸 NEW: rensa error när man avbryter
   };
 
-  //När Excelfil laddas upp görs den om till en workbook som sparas i state
   useEffect(() => {
     async function fetchExcel() {
       const buffer = await file.arrayBuffer();
@@ -49,26 +50,21 @@ export default function UploadFile({
 
   return (
     <main className="flex min-h-[70vh] flex-col items-center justify-center bg-gray-100 p-6">
-      {/* Startknapp */}
       {!showForm && (
-        <>
-          <button
-            onClick={() => setShowForm(true)}
-            className="px14 rounded-lg bg-indigo-600 px-12 py-6 text-white shadow transition hover:bg-indigo-700"
-          >
-            UPLOAD FILE
-          </button>
-        </>
+        <button
+          onClick={() => setShowForm(true)}
+          className="px14 rounded-lg bg-indigo-600 px-12 py-6 text-white shadow transition hover:bg-indigo-700"
+        >
+          UPLOAD FILE
+        </button>
       )}
 
-      {/* Formulär */}
       {showForm && (
         <div className="mt-4 flex w-full max-w-md flex-col gap-6 rounded-xl bg-white p-6 shadow-lg">
           <h2 className="text-center text-2xl font-semibold">
             Upload your Excel file
           </h2>
 
-          {/* Inputfält för Excel-fil – tydligare styling */}
           <div className="flex flex-col gap-2">
             <label className="font-medium">Select Excel (.xlsx)</label>
             <input
@@ -82,9 +78,10 @@ export default function UploadFile({
                 Selected file: <span className="font-medium">{file.name}</span>
               </p>
             )}
+            {/* 🔸 NEW: visa error-meddelande */}
+            {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
           </div>
 
-          {/* Knappar */}
           <div className="mt-4 flex justify-between">
             <Button clickHandler={handleCancel} buttonText={"Cancel"} />
             <Button clickHandler={handleSubmit} buttonText={"Edit"} />
