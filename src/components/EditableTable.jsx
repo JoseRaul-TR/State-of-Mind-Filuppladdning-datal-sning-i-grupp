@@ -79,19 +79,19 @@ export default function EditableTable({
     return (
       <div className="mx-auto mt-6 w-full max-w-3xl rounded-xl border-2 border-dashed border-indigo-300 bg-indigo-50 p-8 text-center shadow">
         <h2 className="mb-2 text-2xl font-semibold text-indigo-700">
-          Redigerbar tabell
+          Editable Table
         </h2>
-        <p className="text-gray-600">Ingen data att visa ännu</p>
+        <p className="text-gray-600">No data shows yet</p>
       </div>
     );
 
   return (
     <div className="relative mx-auto mt-6 w-full max-w-5xl rounded-xl bg-white p-6 shadow-lg">
       <h2 className="mb-4 text-2xl font-semibold text-indigo-700">
-        Redigerbar tabell
+        Editable Table
       </h2>
       <p className="mb-6 text-sm text-gray-500">
-        Rader: {rowsData.length} | Kolumner: {columns.length}
+        Rows: {rowsData.length} | Columns: {columns.length}
       </p>
 
       <div className="overflow-x-auto rounded-lg border border-indigo-200 shadow">
