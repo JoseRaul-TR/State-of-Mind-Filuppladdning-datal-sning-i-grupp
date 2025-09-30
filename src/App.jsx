@@ -44,13 +44,6 @@ function App() {
     }
   };
 
-  // ******* Temporary function to test ExportState = 'error' *******
-  const handleTestExportError = () => {
-    setExportStatus("error");
-    setProgress("export");
-  };
-  // ********************************************************
-
   //Villkorlig visning av komponenter, baserat på progress-state
   return (
     <Layout>
@@ -66,37 +59,23 @@ function App() {
           setRowData={setRowData}
         />
       )}
-      
       {progress === "editTable" && (
-  <>
-    <EditableTable
-      data={rowData}
-      onDataChange={handleDataChange}
-      onExport={handleExportToPdf}
-      onReset={() => {                 // 🔸 NEW
-        setFile(null);                 // nollställ fil
-        setWorkbook(null);             // nollställ workbook
-        setRowData([]);                // töm tabell-data
-        setEditedData([]);             // töm redigerad data
-        setPdfUrl(null);               // nollställ pdf-url
-        setExportStatus(null);         // nollställ exportstatus
-        setProgress("start");          // tillbaka till start
-      }}
-    />
-
-          {/********** Temporary button for testing exportStatus error ***********/}{" "}
-          <div className="fixed bottom-4 left-4">
-            <button
-              onClick={handleTestExportError}
-              className="bg-red-700 p-3 text-white"
-            >
-              TEST EXPORT ERROR
-            </button>
-          </div>
-          {/********** End of temporary button for testing exportStatus error ***********/}{" "}
-        </>
+          <EditableTable
+            data={rowData}
+            onDataChange={handleDataChange}
+            onExport={handleExportToPdf}
+            onReset={() => {
+              // 🔸 NEW
+              setFile(null); // nollställ fil
+              setWorkbook(null); // nollställ workbook
+              setRowData([]); // töm tabell-data
+              setEditedData([]); // töm redigerad data
+              setPdfUrl(null); // nollställ pdf-url
+              setExportStatus(null); // nollställ exportstatus
+              setProgress("start"); // tillbaka till start
+            }}
+          />
       )}
-      
       {progress === "export" && (
         <ExportDialogue
           exportStatus={exportStatus}

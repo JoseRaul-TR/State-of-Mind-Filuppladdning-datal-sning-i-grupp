@@ -14,7 +14,6 @@ export default function ExportDialogue({
   onTryAgain,
   onCancel,
   onGoHome,
-  setProgress,
 }) {
   /* Behöver vi den här längre? */
  // 🔸 NEW helt borttaget – vi behåller bara de riktiga exportStatus: "success" | "error"
