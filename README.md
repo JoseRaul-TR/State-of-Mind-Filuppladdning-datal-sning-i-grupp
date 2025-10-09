@@ -1,3 +1,6 @@
+
+👉 **Check it out:** [filuppladdning.vercel.app](https://filuppladdning.vercel.app)
+
 # Group assignment - File upload and data reading
 
 This app was developed in our second semester of our first year of two, during our studies in Frontend Development with React. In this assignment, we were challenged with the task of uploading an .xslx file, parsing the content, displaying it in an editable table and, finally, exporting the altered data as a pdf.
